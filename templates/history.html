@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>History · AI News Summarizer</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="brand">
+        <span class="brand-icon">📰</span>
+        <span>AI News Summarizer</span>
+      </div>
+      <nav>
+        <a href="{{ url_for('index') }}" class="nav-link">Summarize</a>
+        <a href="{{ url_for('history') }}" class="nav-link active">History</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card hero">
+      <h1>Summary History</h1>
+      <p class="subtitle">Every article you've summarized, saved locally in SQLite.</p>
+    </section>
+
+    {% if articles %}
+      <section class="history-list">
+        {% for article in articles %}
+        <div class="card history-item" data-id="{{ article.id }}">
+          <div class="history-item-header">
+            <div>
+              <h3>{{ article.title }}</h3>
+              <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" class="source-link">{{ article.url }}</a>
+              <div class="history-meta">{{ article.created_at }}</div>
+            </div>
+            <div class="history-item-actions">
+              <span class="badge badge-{{ article.sentiment|lower }}">{{ article.sentiment }}</span>
+              <button class="btn-secondary toggle-detail-btn">View</button>
+              <button class="btn-danger delete-btn" data-id="{{ article.id }}">Delete</button>
+            </div>
+          </div>
+          <p class="history-summary-preview">{{ article.summary[:180] }}{% if article.summary|length > 180 %}…{% endif %}</p>
+
+          <!-- Populated dynamically via JS when "View" is clicked -->
+          <div class="history-detail hidden"></div>
+        </div>
+        {% endfor %}
+      </section>
+    {% else %}
+      <section class="card empty-state">
+        <p>No articles summarized yet. <a href="{{ url_for('index') }}">Summarize your first one →</a></p>
+      </section>
+    {% endif %}
+  </main>
+
+  <footer class="footer">
+    <p>Built with Flask, BeautifulSoup &amp; Gemini AI · <a href="{{ url_for('index') }}">Back to Summarizer</a></p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/history.js') }}"></script>
+</body>
+</html>
