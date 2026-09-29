@@ -1,6 +1,8 @@
 # 📰 AI News Summarizer
 
-A full-stack web app that scrapes any news article from a URL and uses **Google's Gemini API** to generate a short summary, key points, and sentiment analysis — with all results saved to a local SQLite history.
+AI News Summarizer is a full-stack web application that extracts news articles from URLs and uses the **Google Gemini API** to generate concise summaries, key points, and sentiment analysis.
+
+The application provides a responsive interface where users can submit a news article URL, view the generated results, and manage their previous summaries.
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![Flask](https://img.shields.io/badge/Flask-3.x-black)
